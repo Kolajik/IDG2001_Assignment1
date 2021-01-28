@@ -1,3 +1,5 @@
+var ex2 = require('./exercise2.js');
+
 const cool = require('cool-ascii-faces')
 const express = require('express')
 const path = require('path')
@@ -8,8 +10,11 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
+  .get('/exercise2', (req,res) => res.render('pages/exercise2'))
   .get('/cool', (req, res) => res.send(cool()))
   .get('/times', (req,res) => res.send(showTimes()))
+  .get('/fibNumFun', (req,res) => res.send(ex2.fibonacciNumFunction(10)))
+  .get('/fibNumRec', (req,res) => res.send(ex2.fibonacciNumRecursive(10)) + ", ")
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 showTimes = () => {
