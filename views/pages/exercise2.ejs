@@ -20,9 +20,11 @@
       <h3><span class="glyphicon glyphicon-registration-mark"></span>Fibonacci functions</h3>
       <form>
         Max Fib number: <input type="number" id="fibNumFun" required min="1"><br>
-        <button onClick="document.write(fibonacciNumFunction(document.getElementById('fibNumFun').value))">Fibonacci classic</button>
-        <button onClick="document.write(fibonacciRecursive(document.getElementById('fibNumFun').value))">Fibonacci Recursive</button>
+        <button type="button" onClick="fibonacciNumFunction(document.getElementById('fibNumFun').value)">Fibonacci classic</button>
+<!--         <button type="button" onClick="document.write(fibonacciRecursive(document.getElementById('fibNumFun').value))">Fibonacci Recursive</button> -->
+        <button type="button" onClick="FibRecRes(document.getElementById('fibNumFun').value)">Fibonacci Recursive</button>
       </form>
+      <p id="fibResult">Result: </p>
     </div>
   </div> <!-- row -->
 
@@ -33,7 +35,7 @@
       <h3><span class="glyphicon glyphicon-registration-mark"></span>Form with student name</h3>
       <form>
         Student name: <input type="text" id="name" required><br>
-        <button onClick="displayName()">Show name on screen</button>
+        <button type="button" onClick="displayName()">Show name on screen</button>
       </form>
     </div>
   </div>
@@ -45,19 +47,33 @@
       <h3><span class="glyphicon glyphicon-registration-mark"></span>Display student age from array</h3>
       <form>
         Student age: <input type="number" id="age" required min="1"><br>
-        <button onClick="findStudentByAge(document.getElementById('age').value)">Show name on screen</button>
+        <button type="button" onClick="findStudentByAge(document.getElementById('age').value)">Show student by age</button>
+      </form>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="border">
+      <h3><span class="glyphicon glyphicon-registration-mark"></span>Form with student name - AJAX</h3>
+      <form>
+        Student name AJAX: <input type="text" id="nameAjax" required><br>
+        <button type="button" onClick="displayNameAjax()">Show name on screen</button>
       </form>
     </div>
   </div>
 </div> <!-- container -->
-
-
 </body>
 
 <script>
 // FIBONACCI
-console.log("Fibonacci sequence recursive: "+fibonacciRecursive(12))
-console.log("Fibonacci sequence method: "+fibonacciNumFunction(12))
+// console.log("Fibonacci sequence recursive: "+fibonacciRecursive(12))
+// console.log("Fibonacci sequence method: "+fibonacciNumFunction(12))
+
+function FibRecRes(n) {
+    document.getElementById('fibResult').innerHTML = "Result: "+fibonacciRecursive(n)
+}
 
 function fibonacciRecursive(n) {
     if(n == 1) {
@@ -85,13 +101,16 @@ function fibonacciNumFunction(n) {
             fibSequence.push(x)
             n--
         }
-        return fibSequence
+        document.getElementById('fibResult').innerHTML = "Result: "+fibSequence
+//         return fibSequence
     }
     else if (n < 0) {
-        return "Please enter number bigger than 0"
+        document.getElementById('fibResult').innerHTML = "Result: Please enter number bigger than 0"
+//         return "Please enter number bigger than 0"
     }
     else {
-        return fibSequence
+        document.getElementById('fibResult').innerHTML = "Result: "+fibSequence
+//         return fibSequence
     }
 };
 </script>
@@ -148,6 +167,26 @@ function findStudentByAge(age) {
         }
         else if (i == students.length - 1 && !found)
             alert("No student with this age.")
+}
+</script>
+
+<script>
+// AJAX calls
+function displayNameAjax() {
+    var request = new XMLHttpRequest()
+    if(document.getElementById('nameAjax').value == "")
+        alert("You have not entered any name.")
+    else {
+        request.open("GET", "ajaxCall.txt", true)
+//         console.log(request)
+        request.onload = function() {
+            if(this.status === 200) {
+                alert(this.responseText+" "+document.getElementById("nameAjax").value);
+            }
+            else console.log(request.statusText+",\n"+request.responseText)
+        }
+        request.send()
+    }
 }
 </script>
 

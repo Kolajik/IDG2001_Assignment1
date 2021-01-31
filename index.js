@@ -11,6 +11,7 @@ express()
   .get('/exercise2', (req,res) => res.render('pages/exercise2'))
   .get('/cool', (req, res) => res.send(cool()))
   .get('/times', (req,res) => res.send(showTimes()))
+  .get('/ajaxCall.txt', (req, res) => res.sendFile(path.join(__dirname + '/views/pages/resources/ajaxCall.txt')))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 showTimes = () => {
