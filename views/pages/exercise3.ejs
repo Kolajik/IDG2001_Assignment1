@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exercise 3</title>
+  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/exercises.css" />
+</head>
+
+<body>
+<div class="jumbotron text-center">
+  <div class="container">
+    <h1>Exercise 3</h1>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="row">
+    <div class="border">
+      <h3><span class="glyphicon glyphicon-info-sign"></span>LOOK INTO THE CONSOLE</h3>
+<!--       <form> -->
+<!--         Returns values containing '@' sign: <input type="number" id="fibNumFun" required min="1"><br> -->
+<!--         <button type="button" onClick="fibonacciNumFunction(document.getElementById('fibNumFun').value)">Fibonacci classic</button> -->
+<!--         <button type="button" onClick="document.write(fibonacciRecursive(document.getElementById('fibNumFun').value))">Fibonacci Recursive</button> -->
+<!--         <button type="button" onClick="FibRecRes(document.getElementById('fibNumFun').value)">Fibonacci Recursive</button> -->
+<!--       </form> -->
+<!--       <p id="fibResult">Result: </p> -->
+    </div>
+  </div> <!-- row -->
+
+</div> <!-- container -->
+</body>
+
+<script>
+// ARRAYS
+var example_array = ['AAA@', 'BBB', '@CCC', 'WORRIED', 'PO@P', 'SH@T', 'hithere']
+var sentence = 'This is a simple sentence you can use to thank someone'
+
+tryArrays()
+addElementToArray()
+deleteFirstElement()
+modifyElement(2)
+extractSubstring('you can use to thank')
+
+function tryArrays() {
+    for (i=0; i< example_array.length; i++)
+        if (example_array[i].includes('@')) console.log(example_array[i])
+}
+
+function addElementToArray() {
+    example_array.push('Hello')
+    console.log(example_array)
+}
+
+function deleteFirstElement() {
+    example_array.shift()
+    console.log(example_array)
+}
+
+function modifyElement(n) {
+    for(i=0; i<example_array.length; i++) {
+        if (n == i) example_array[i] = 'Hello again'
+    }
+
+    console.log(example_array)
+}
+
+function extractSubstring(subString) {
+    if (sentence.match(subString)) console.log(subString)
+    else console.log("Substring does not exist in sentence")
+}
+
+</script>
+
+</html>
