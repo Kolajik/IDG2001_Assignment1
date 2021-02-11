@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exercise 4</title>
+  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/exercises.css" />
+</head>
+
+<body>
+<div class="jumbotron text-center">
+  <div class="container">
+    <h1>Exercise 4</h1>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="row">
+    <div class="border">
+      <h3><span class="glyphicon glyphicon-info-sign"></span>LOOK INTO THE CONSOLE</h3>
+<!--       <form> -->
+<!--         Returns values containing '@' sign: <input type="number" id="fibNumFun" required min="1"><br> -->
+<!--         <button type="button" onClick="fibonacciNumFunction(document.getElementById('fibNumFun').value)">Fibonacci classic</button> -->
+<!--         <button type="button" onClick="document.write(fibonacciRecursive(document.getElementById('fibNumFun').value))">Fibonacci Recursive</button> -->
+<!--         <button type="button" onClick="FibRecRes(document.getElementById('fibNumFun').value)">Fibonacci Recursive</button> -->
+<!--       </form> -->
+<!--       <p id="fibResult">Result: </p> -->
+    </div>
+  </div> <!-- row -->
+
+</div> <!-- container -->
+</body>
+
+<script>
+var person_array = [
+    {"first_name": "John",
+     "last_name": "Smith",
+     "city": "Boston",
+     "state": "MA",
+     "children": [
+        {"name": "Callie", "age": 5},
+        {"name": "Griffin", "age" :3},
+        {"name": "Howard", "age": 1}
+        ]
+    },
+    {"first_name": "John",
+     "last_name":"Doe",
+     "city": "Los Angeles",
+     "state": "CA"
+    },
+    {"first_name": "Henry",
+     "last_name": "Rhodes",
+     "city": "New York",
+     "state": "NY",
+     "children": [
+        {"name": "Howard", "age": 15},
+        {"name": "Robert", "age": 11}
+        ]
+    },
+    {"first_name": "Pil",
+     "last_name": "Diego",
+     "city": "Los Angeles",
+     "state": "CA"
+    },
+    {"first_name": "Allison",
+     "last_name": "Smith",
+     "city": "San Diego",
+     "state": "CA",
+     "children": [
+        {"name": "Jeff", "age": 35},
+        {"name": "Roxanne", "age": 33},
+        {"name": "Claudia", "age": 31},
+        {"name": "Denzel", "age": 11}
+        ]
+    },
+    {"first_name": "Manny",
+     "last_name": "Houston",
+     "city": "Texas",
+     "state": "US"
+    }
+];
+
+function hasChildren() {
+    for(i=0; i<person_array.length; i++) {
+        if (person_array[i].hasOwnProperty('children'))
+            console.log(person_array[i].first_name + ' ' + person_array[i].last_name + ' has some children!')
+    }
+}
+
+function displayChildren() {
+    for(i=0; i<person_array.length; i++) {
+        if (person_array[i].hasOwnProperty('children'))
+            console.log(person_array[i].first_name + ' ' + person_array[i].last_name + ' has these children:')
+            console.log(person_array[i].children)
+    }
+}
+
+function lookupPerson(person_name) {
+    var personFound = false
+    var personCount = 0
+    for(i=0; i<person_array.length; i++) {
+        if (person_array[i].first_name == person_name) {
+            personFound = true
+            if (personFound && personCount == 1)
+                console.log('Person/people with name ' + person_name + ' exist!')
+            personCount++
+        }
+    }
+    console.log('There are ' + personCount + ' people named ' + person_name + '.')
+}
+
+function displayOldestChildren() {
+    var maxAge = 0
+    var foundChildren = false
+    var childsName = ""
+
+    for(i=0; i<person_array.length; i++)
+        if (person_array[i].hasOwnProperty('children') && foundChildren == false) {
+            maxAge = person_array[i].children[0].age
+            foundChildren = true
+        }
+
+    console.log('Found first child who is ' + maxAge + ' years old.')
+
+    for(i=0; i<person_array.length; i++)
+            if (person_array[i].hasOwnProperty('children'))
+                for (j=0; j<person_array[i].children.length; j++) {
+                    if (person_array[i].children[j].age > maxAge) {
+                        maxAge = person_array[i].children[j].age
+                        childsName = person_array[i].children[j].name
+                    }
+                }
+
+    console.log(childsName + ' is the oldest child from the array with age of ' + maxAge + '.')
+}
+
+function displayCitiesByState(state) {
+    var cities = []
+    for(i=0; i<person_array.length; i++) {
+        if (person_array[i].hasOwnProperty('state') && person_array[i].state === state)
+            if(!cities.includes(person_array[i].city))
+                cities.push(person_array[i].city)
+    }
+
+    console.log('All cities which belong to ' + state + ' state: ' + cities)
+}
+
+// hasChildren()
+// displayChildren()
+// lookupPerson('John')
+// displayOldestChildren()
+// displayCitiesByState('CA')
+</script>
+
+<script>
+var student_array = [
+    {"name": "Peter",
+     "age": 22,
+     "country": "United States"
+    },
+    {"name": "Ashley",
+     "age": 17,
+     "country": "Norway"
+    },
+    {"name": "Ben",
+     "age": 18,
+     "country": "Germany"
+    },
+]
+
+function displayStudentsAboveAge(limit) {
+    var studentsAboveLimit = []
+    for(i=0; i< student_array.length; i++) {
+        if (student_array[i].age > limit && !studentsAboveLimit.includes(student_array[i].name))
+            studentsAboveLimit.push(student_array[i].name)
+    }
+
+    console.log('Students above ' + limit + ' age: ' + studentsAboveLimit)
+}
+
+function getCountryOfStudent(index) {
+    if (index > student_array.length || index < 0) {
+        console.log('Incorrect index input.')
+        return
+    }
+
+    console.log(student_array[index-1].country)
+}
+
+// displayStudentsAboveAge(21)
+getCountryOfStudent(2)
+</script>
