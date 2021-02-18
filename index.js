@@ -43,12 +43,3 @@ showTimes = () => {
   }
   return result
 }
-
-function getAllUsers(e) {
-    console.log(e)
-    fetch(e)
-      .then(response => response.json())
-      .then(data => {
-          console.log(data);
-      });
-}
