@@ -110,15 +110,14 @@ async function createListings(client, firstName, lastName, dateOfBirth, city) {
     return { "message": `Client ${firstName} ${lastName} already has an account - ${finding.account_number}.` };
   }
   else {
+    performance.mark('C')
+    performance.measure('B to C', 'B', 'C');
+    const measureAB = performance.getEntriesByName('A to B')[0];
+    const measureBC = performance.getEntriesByName('B to C')[0];
+    console.log(`AB latency: ${measureAB.duration} BC latency: ${measureBC.duration}`)
+
     const result = client.db(DATABASE).collection(COLLECTION)
       .insertOne(newListings)
-      .then(() => {
-        performance.mark('C')
-        performance.measure('B to C', 'B', 'C');
-        const measureAB = performance.getEntriesByName('A to B')[0];
-        const measureBC = performance.getEntriesByName('B to C')[0];
-        console.log(`AB latency: ${measureAB.duration} BC latency: ${measureBC.duration}`)
-      })
       .then(result => {
         console.log(`A new record with id ${result.insertedId} was inserted to DB ${DATABASE} and table ${COLLECTION}.`);
       })
