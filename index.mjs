@@ -84,7 +84,7 @@ async function listDatabases(client) {
   databasesList.databases.forEach(db => console.log(` - ${db.name}`));
 }
 // AJAX Create a user account
-export function createUserAccount() {
+function createUserAccount() {
   performance.mark('A');
   doSomeLongRunningProcess(() => {
     setTimeout(()=> performance.mark('B'), 3000)
@@ -118,6 +118,7 @@ export function createUserAccount() {
     request.send()
   }
 }
+export {createUserAccount}
 async function createListings(client, firstName, lastName, dateOfBirth, city) {
   const t1 = new Date();
   console.log(t1)
