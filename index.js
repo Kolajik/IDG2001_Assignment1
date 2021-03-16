@@ -1,4 +1,5 @@
 const cool = require('cool-ascii-faces')
+const { performance } = require('perf_hooks')
 const express = require('express')
 const fs = require('fs')
 const path = require('path')
@@ -35,20 +36,20 @@ mainApp
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/assignment1', (req, res) => res.render('pages/assignment01'))
-//  .get('/students', (req, res) => res.send([{name:'student_1'}, {name:'student_2'}, {name:'student_3'}])) // http://localhost:5000/students
-  .get('/students/:id',(req,res)=> res.send({id:req.params.id, name: "New_student"})) // http://localhost:5000/students/1
+  //  .get('/students', (req, res) => res.send([{name:'student_1'}, {name:'student_2'}, {name:'student_3'}])) // http://localhost:5000/students
+  .get('/students/:id', (req, res) => res.send({ id: req.params.id, name: "New_student" })) // http://localhost:5000/students/1
   // a)	Read the given users.json file and display the all users in web.
-//  .get('/all_users', (req, res) => res.sendFile(path.join(__dirname + '/views/pages/resources/users.json')))
+  //  .get('/all_users', (req, res) => res.sendFile(path.join(__dirname + '/views/pages/resources/users.json')))
   .get('/all_users', (req, res) => fs.readFile(path.join(__dirname + '/views/pages/resources/users.json'), 'utf-8',
-  function(err, data) {
-    res.end(data)
-  }))
+    function (err, data) {
+      res.end(data)
+    }))
   // b)	Pass the id in URL and display the corresponding user details.
   .get('/user/:id', (req, res) => fs.readFile(path.join(__dirname + '/views/pages/resources/users.json'), 'utf-8',
-  function(err, data) {
-    users = JSON.parse(data)
-    res.end(JSON.stringify(users["user" + req.params.id]))
-  }))
+    function (err, data) {
+      users = JSON.parse(data)
+      res.end(JSON.stringify(users["user" + req.params.id]))
+    }))
   .post('/createUserAccount/:fname/:lname/:dateOfBirth/:city', async (req, res) => {
     const response = await createListings(mongodbClient, req.params.fname, req.params.lname, req.params.dateOfBirth, req.params.city);
     console.log(response);
@@ -62,15 +63,15 @@ mainApp
   // .get('/cool', (req, res) => res.send(cool()))
   // .get('/times', (req,res) => res.send(showTimes()))
   // c)	Add the following details by modifying users.json file.
-//  .get('/add_user')
+  //  .get('/add_user')
   // d)	Delete the user id =4 by modifying users.json file.
-//  .get('/delete_user')
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+  //  .get('/delete_user')
+  .listen(PORT, () => console.log(`Listening on ${PORT}`))
 
 showTimes = () => {
   let result = ''
   const times = process.env.TIMES || 5
-  for(i=0; i < times; i++) {
+  for (i = 0; i < times; i++) {
     result += i + ' '
   }
   return result
@@ -82,8 +83,44 @@ async function listDatabases(client) {
   console.log("Databases: ")
   databasesList.databases.forEach(db => console.log(` - ${db.name}`));
 }
-
+// AJAX Create a user account
+export function createUserAccount() {
+  performance.mark('A');
+  doSomeLongRunningProcess(() => {
+    setTimeout(()=> performance.mark('B'), 3000)
+    
+    performance.measure('A to B', 'A', 'B');
+    const measure = performance.getEntriesByName('A to B')[0];
+    console.log(measure.duration);
+    // Prints the number of milliseconds between Mark 'A' and Mark 'B'
+  });
+  const fname = document.getElementById("firstName").value
+  const lname = document.getElementById("lastName").value
+  const dateOfBirth = document.getElementById("dateOfBirth").value
+  const city = document.getElementById("city").value
+  var request = new XMLHttpRequest()
+  if (document.getElementById('firstName').value == "" || document.getElementById('lastName').value == "" || document.getElementById('dateOfBirth').value == "" || document.getElementById('city').value == "")
+    alert("Please fill in all required fields.")
+  else {
+    request.open("POST", `createUserAccount/${fname}/${lname}/${dateOfBirth}/${city}`, true)
+    request.setRequestHeader("Content-Type", "text/plain")
+    console.log(request)
+    request.onload = function () {
+      if (this.readyState === 4 && this.status === 200) {
+        document.getElementById("accountCreateResponse").innerHTML = this.responseText;
+        //alert(this.responseText+" "+document.getElementById("nameAjax").value);
+      }
+      else {
+        console.log(request.statusText + ",\n" + request.responseText)
+        document.getElementById("accountCreateResponse").innerHTML = "An error occured while calling the resource. See console for more info.";
+      }
+    }
+    request.send()
+  }
+}
 async function createListings(client, firstName, lastName, dateOfBirth, city) {
+  const t1 = new Date();
+  console.log(t1)
   const account_number = Math.floor(1000000 + Math.random() * 9000000);
   const person_num = Math.floor(1000000 + Math.random() * 9000000);
   newListings = {
@@ -96,26 +133,28 @@ async function createListings(client, firstName, lastName, dateOfBirth, city) {
     "creation_date": Date.now()
   }
   const finding = await client.db(DATABASE).collection(COLLECTION)
-    .findOne({first_name: firstName, last_name: lastName, date_of_birth: dateOfBirth, city: city})
+    .findOne({ first_name: firstName, last_name: lastName, date_of_birth: dateOfBirth, city: city })
+    .then(console.log(`t2: ${new Date()}`))
     .catch(console.error);
 
   if (finding) {
     console.log(`User already exists.`);
-    return {"message": `Client ${firstName} ${lastName} already has an account - ${finding.account_number}.`};
+    return { "message": `Client ${firstName} ${lastName} already has an account - ${finding.account_number}.` };
   }
   else {
     const result = client.db(DATABASE).collection(COLLECTION)
       .insertOne(newListings)
+      .then(console.log(`t3: ${new Date()}`))
       .then(result => {
         console.log(`A new record with id ${result.insertedId} was inserted to DB ${DATABASE} and table ${COLLECTION}.`);
       })
       .catch(console.error);
-      return {"message": `An account with number ${account_number} for ${firstName} ${lastName} client was created. Person id ${person_num}.`};
+    return { "message": `An account with number ${account_number} for ${firstName} ${lastName} client was created. Person id ${person_num}.` };
   }
 }
 
 async function findListingsByName(client, firstName) {
-  query = {"first_name": firstName}
+  query = { "first_name": firstName }
   const result = await client
     .db(DATABASE)
     .collection(COLLECTION)
