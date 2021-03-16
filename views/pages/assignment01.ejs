@@ -1,164 +1,200 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Assignment 1</title>
-    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="/stylesheets/exercises.css" />
+  <title>Assignment 1</title>
+  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/exercises.css" />
 </head>
 
 <body>
-    <div class="jumbotron text-center">
-        <h1>Assignment 1</h1>
-        <p>Kolaja David, Emil Bøen, Gabriel Marques</p>
+  <div class="jumbotron text-center">
+    <h1>Assignment 1</h1>
+    <p>Kolaja David, Emil Bøen, Gabriel Marques</p>
+  </div>
+
+  <main>
+    <div class="_container">
+      <div class="row">
+
+        <form>
+          <h3>Form with student name</h3>
+          <label for="name"> Student name: </label>
+          <input type="text" id="name" name="name" required><br>
+          <button type="button" onClick="displayName()">Show name on screen</button>
+        </form>
+      </div>
+
+      <div class="row">
+        <form>
+          <h3>Display student by age</h3>
+          <label for="age"> Student age: </label>
+          <input type="number" name="age" id="age" required min="1"><br>
+          <button type="button" onClick="findStudentByAge(document.getElementById('age').value)">Show student
+            by age</button>
+        </form>
+      </div>
+
+      <div class="row">
+        <form>
+          <h3>Add a user account</h3>
+          <label>First name:</label>
+          <input type="text" id="firstName" required><br>
+          <label>Last name:</label>
+          <input type="text" id="lastName" required><br>
+          <label>Date of birth:</label>
+          <input type="date" placeholder="1970-01-01" id="dateOfBirth" required><br>
+          <label>City: </label>
+          <input type="text" id="city" required><br>
+          <button type="button" onClick="createUserAccount()">Create an account</button>
+          <p id="accountCreateResponse"><b>Please mind your inputs.</b></p>
+        </form>
+      </div>
     </div>
-
-    <main>
-        <div class="_container">
-            <div class="row">
-                
-                <form>
-                    <h3>Form with student name</h3>
-                    <label for="name"> Student name: </label>
-                    <input type="text" id="name" name="name" required><br>
-                    <button type="button" onClick="displayName()">Show name on screen</button>
-                </form>
-            </div>
-
-            <div class="row">
-                <form>
-                    <h3>Display student by age</h3>
-                    <label for="age"> Student age: </label>
-                    <input type="number" name="age" id="age" required min="1"><br>
-                    <button type="button" onClick="findStudentByAge(document.getElementById('age').value)">Show student
-                        by age</button>
-                </form>
-            </div>
-
-            <div class="row">
-                <form>
-                    <h3>Add a user account</h3>
-                    <label>First name:</label>
-                    <input type="text" id="firstName" required><br>
-                    <label>Last name:</label>
-                    <input type="text" id="lastName" required><br>
-                    <label>Date of birth:</label>
-                    <input type="date" placeholder="1970-01-01" id="dateOfBirth" required><br>
-                    <label>City: </label>
-                    <input type="text" id="city" required><br>
-                    <button type="button" onClick="createUserAccount()">Create an account</button>
-                    <p id="accountCreateResponse"><b>Please mind your inputs.</b></p>
-                </form>
-            </div>
-        </div>
-    </main> <!-- container -->
+  </main> <!-- container -->
 </body>
 
 <script>
-    // FIBONACCI
-    // console.log("Fibonacci sequence recursive: "+fibonacciRecursive(12))
-    // console.log("Fibonacci sequence method: "+fibonacciNumFunction(12))
+  // FIBONACCI
+  // console.log("Fibonacci sequence recursive: "+fibonacciRecursive(12))
+  // console.log("Fibonacci sequence method: "+fibonacciNumFunction(12))
 
-    function FibRecRes(n) {
-        document.getElementById('fibResult').innerHTML = "Result: " + fibonacciRecursive(n)
+  function FibRecRes(n) {
+    document.getElementById('fibResult').innerHTML = "Result: " + fibonacciRecursive(n)
+  }
+
+  function fibonacciRecursive(n) {
+    if (n == 1) {
+      return [0, 1]
     }
+    else if (n <= 0) {
+      return "Please enter number bigger than 0"
+    }
+    else {
+      var fibSequence = fibonacciRecursive(n - 1)
+      fibSequence.push(fibSequence[fibSequence.length - 1] + fibSequence[fibSequence.length - 2])
+      return fibSequence
+    }
+  };
 
-    function fibonacciRecursive(n) {
-        if (n == 1) {
-            return [0, 1]
-        }
-        else if (n <= 0) {
-            return "Please enter number bigger than 0"
-        }
-        else {
-            var fibSequence = fibonacciRecursive(n - 1)
-            fibSequence.push(fibSequence[fibSequence.length - 1] + fibSequence[fibSequence.length - 2])
-            return fibSequence
-        }
-    };
-
-    function fibonacciNumFunction(n) {
-        var fibSequence = [0,]
-        if (n >= 1) {
-            x = 0
-            y = 1
-            while (n >= 1) {
-                tmp = x
-                x = x + y
-                y = tmp
-                fibSequence.push(x)
-                n--
-            }
-            document.getElementById('fibResult').innerHTML = "Result: " + fibSequence
-            //         return fibSequence
-        }
-        else if (n <= 0) {
-            document.getElementById('fibResult').innerHTML = "Result: Please enter number bigger than 0"
-            //         return "Please enter number bigger than 0"
-        }
-        else {
-            document.getElementById('fibResult').innerHTML = "Result: " + fibSequence
-            //         return fibSequence
-        }
-    };
+  function fibonacciNumFunction(n) {
+    var fibSequence = [0,]
+    if (n >= 1) {
+      x = 0
+      y = 1
+      while (n >= 1) {
+        tmp = x
+        x = x + y
+        y = tmp
+        fibSequence.push(x)
+        n--
+      }
+      document.getElementById('fibResult').innerHTML = "Result: " + fibSequence
+      //         return fibSequence
+    }
+    else if (n <= 0) {
+      document.getElementById('fibResult').innerHTML = "Result: Please enter number bigger than 0"
+      //         return "Please enter number bigger than 0"
+    }
+    else {
+      document.getElementById('fibResult').innerHTML = "Result: " + fibSequence
+      //         return fibSequence
+    }
+  };
 </script>
 
 <script>
-    // PEOPLE STRUCTURES
-    var student = {
-        name: "Dave",
-        age: 24,
-        city: "Gjovik"
+  // PEOPLE STRUCTURES
+  var student = {
+    name: "Dave",
+    age: 24,
+    city: "Gjovik"
+  }
+
+  var students = [{
+    name: "Dave",
+    age: 24,
+    city: "Gjovik"
+  },
+  {
+    name: "Marek",
+    age: 31,
+    city: "Brno"
+  },
+  {
+    name: "Luke",
+    age: 19,
+    city: "Prague"
+  }
+  ]
+
+  function makeStudentOlder(years) {
+    return student.age + years;
+  }
+
+  console.log("Student is " + makeStudentOlder(6) + " years old.")
+
+  function displayName() {
+    if (document.getElementById('name').value == "")
+      alert("You have not entered any name.")
+    else
+      alert(document.getElementById('name').value)
+  }
+
+  function findStudentByAge(age) {
+    if (age <= 0) {
+      alert("Please enter age higher than 0.")
+      return
     }
 
-    var students = [{
-        name: "Dave",
-        age: 24,
-        city: "Gjovik"
-    },
-    {
-        name: "Marek",
-        age: 31,
-        city: "Brno"
-    },
-    {
-        name: "Luke",
-        age: 19,
-        city: "Prague"
-    }
-    ]
-
-    function makeStudentOlder(years) {
-        return student.age + years;
-    }
-
-    console.log("Student is " + makeStudentOlder(6) + " years old.")
-
-    function displayName() {
-        if (document.getElementById('name').value == "")
-            alert("You have not entered any name.")
-        else
-            alert(document.getElementById('name').value)
-    }
-
-    function findStudentByAge(age) {
-        if (age <= 0) {
-            alert("Please enter age higher than 0.")
-            return
-        }
-
-        found = false
-        for (i = 0; i < students.length; i++)
-            if (students[i].age == age) {
-                alert("Name: " + students[i].name + "\nAge: " + students[i].age + "\nCity: " + students[i].city)
-                found = true
-            }
-            else if (i == students.length - 1 && !found)
-                alert("No student with this age.")
-    }
+    found = false
+    for (i = 0; i < students.length; i++)
+      if (students[i].age == age) {
+        alert("Name: " + students[i].name + "\nAge: " + students[i].age + "\nCity: " + students[i].city)
+        found = true
+      }
+      else if (i == students.length - 1 && !found)
+        alert("No student with this age.")
+  }
 </script>
 
 <script>
-    import {createUserAccount} from '../index.js'
+const { performance } = require('perf_hooks')
+  // AJAX Create a user account
+  function createUserAccount() {
+    performance.mark('A');
+    doSomeLongRunningProcess(() => {
+      setTimeout(() => performance.mark('B'), 3000)
+
+      performance.measure('A to B', 'A', 'B');
+      const measure = performance.getEntriesByName('A to B')[0];
+      console.log(measure.duration);
+      // Prints the number of milliseconds between Mark 'A' and Mark 'B'
+    });
+    const fname = document.getElementById("firstName").value
+    const lname = document.getElementById("lastName").value
+    const dateOfBirth = document.getElementById("dateOfBirth").value
+    const city = document.getElementById("city").value
+    var request = new XMLHttpRequest()
+    if (document.getElementById('firstName').value == "" || document.getElementById('lastName').value == "" || document.getElementById('dateOfBirth').value == "" || document.getElementById('city').value == "")
+      alert("Please fill in all required fields.")
+    else {
+      request.open("POST", `createUserAccount/${fname}/${lname}/${dateOfBirth}/${city}`, true)
+      request.setRequestHeader("Content-Type", "text/plain")
+      console.log(request)
+      request.onload = function () {
+        if (this.readyState === 4 && this.status === 200) {
+          document.getElementById("accountCreateResponse").innerHTML = this.responseText;
+          //alert(this.responseText+" "+document.getElementById("nameAjax").value);
+        }
+        else {
+          console.log(request.statusText + ",\n" + request.responseText)
+          document.getElementById("accountCreateResponse").innerHTML = "An error occured while calling the resource. See console for more info.";
+        }
+      }
+      request.send()
+    }
+  }
 </script>
 
 </html>

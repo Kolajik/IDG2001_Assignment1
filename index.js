@@ -83,42 +83,7 @@ async function listDatabases(client) {
   console.log("Databases: ")
   databasesList.databases.forEach(db => console.log(` - ${db.name}`));
 }
-// AJAX Create a user account
-function createUserAccount() {
-  performance.mark('A');
-  doSomeLongRunningProcess(() => {
-    setTimeout(()=> performance.mark('B'), 3000)
-    
-    performance.measure('A to B', 'A', 'B');
-    const measure = performance.getEntriesByName('A to B')[0];
-    console.log(measure.duration);
-    // Prints the number of milliseconds between Mark 'A' and Mark 'B'
-  });
-  const fname = document.getElementById("firstName").value
-  const lname = document.getElementById("lastName").value
-  const dateOfBirth = document.getElementById("dateOfBirth").value
-  const city = document.getElementById("city").value
-  var request = new XMLHttpRequest()
-  if (document.getElementById('firstName').value == "" || document.getElementById('lastName').value == "" || document.getElementById('dateOfBirth').value == "" || document.getElementById('city').value == "")
-    alert("Please fill in all required fields.")
-  else {
-    request.open("POST", `createUserAccount/${fname}/${lname}/${dateOfBirth}/${city}`, true)
-    request.setRequestHeader("Content-Type", "text/plain")
-    console.log(request)
-    request.onload = function () {
-      if (this.readyState === 4 && this.status === 200) {
-        document.getElementById("accountCreateResponse").innerHTML = this.responseText;
-        //alert(this.responseText+" "+document.getElementById("nameAjax").value);
-      }
-      else {
-        console.log(request.statusText + ",\n" + request.responseText)
-        document.getElementById("accountCreateResponse").innerHTML = "An error occured while calling the resource. See console for more info.";
-      }
-    }
-    request.send()
-  }
-}
-export {createUserAccount}
+
 async function createListings(client, firstName, lastName, dateOfBirth, city) {
   const t1 = new Date();
   console.log(t1)
