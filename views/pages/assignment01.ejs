@@ -159,18 +159,8 @@
 </script>
 
 <script>
-const { performance } = require('perf_hooks')
   // AJAX Create a user account
   function createUserAccount() {
-    performance.mark('A');
-    doSomeLongRunningProcess(() => {
-      setTimeout(() => performance.mark('B'), 3000)
-
-      performance.measure('A to B', 'A', 'B');
-      const measure = performance.getEntriesByName('A to B')[0];
-      console.log(measure.duration);
-      // Prints the number of milliseconds between Mark 'A' and Mark 'B'
-    });
     const fname = document.getElementById("firstName").value
     const lname = document.getElementById("lastName").value
     const dateOfBirth = document.getElementById("dateOfBirth").value

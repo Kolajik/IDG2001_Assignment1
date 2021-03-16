@@ -85,8 +85,7 @@ async function listDatabases(client) {
 }
 
 async function createListings(client, firstName, lastName, dateOfBirth, city) {
-  const t1 = new Date();
-  console.log(t1)
+  performance.mark('A');
   const account_number = Math.floor(1000000 + Math.random() * 9000000);
   const person_num = Math.floor(1000000 + Math.random() * 9000000);
   newListings = {
@@ -100,7 +99,10 @@ async function createListings(client, firstName, lastName, dateOfBirth, city) {
   }
   const finding = await client.db(DATABASE).collection(COLLECTION)
     .findOne({ first_name: firstName, last_name: lastName, date_of_birth: dateOfBirth, city: city })
-    .then(console.log(`t2: ${new Date()}`))
+    .then(() => {
+      performance.mark('B')
+      performance.measure('A to B', 'A', 'B');
+    })
     .catch(console.error);
 
   if (finding) {
@@ -110,7 +112,13 @@ async function createListings(client, firstName, lastName, dateOfBirth, city) {
   else {
     const result = client.db(DATABASE).collection(COLLECTION)
       .insertOne(newListings)
-      .then(console.log(`t3: ${new Date()}`))
+      .then(() => {
+        performance.mark('C')
+        performance.measure('B to C', 'B', 'C');
+        const measureAB = performance.getEntriesByName('A to B')[0];
+        const measureBC = performance.getEntriesByName('B to C')[0];
+        console.log(`AB latency: ${measureAB.duration} BC latency: ${measureBC.duration}`)
+      })
       .then(result => {
         console.log(`A new record with id ${result.insertedId} was inserted to DB ${DATABASE} and table ${COLLECTION}.`);
       })
