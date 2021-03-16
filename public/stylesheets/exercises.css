@@ -1,29 +1,90 @@
-.jumbotron {
-  background: #532F8C;
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@500;400&family=Cairo:wght@200;600;900&display=swap");
+
+body {
+  background: rgb(66, 66, 66);
+}
+main {
+  width: 100%;
+  font-family: "Cairo", sans-serif;
+}
+._container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 2em;
+}
+.row {
+  flex: 1 1 450px;
+}
+.row :is(h3, p) {
+  text-align: center;
+  font-family: "Cairo", sans-serif;
+  font-weight: 900;
+  margin: 1em;
+}
+form {
+  margin: 1em 4em 4em 4em;
+  padding: 2em;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1em;
+}
+form :is(input, button) {
+  width: 70%;
+  height: 3.5em;
+  margin: auto;
+  border: none;
+  border-radius: 0.2em;
+  padding: 3%;
+}
+form label {
+  padding-left: 15%;
+}
+input {
+  background-color: #cdbedb;
+}
+button {
+  background-color: #7a3cdd;
   color: white;
-  padding-bottom: 80px; }
-  .jumbotron .btn-primary {
-    background: #845ac7;
-    border-color: #845ac7; }
-    .jumbotron .btn-primary:hover {
-      background: #7646c1; }
-  .jumbotron p {
-    color: #d9ccee;
-    max-width: 75%;
-    margin: 1em auto 2em; }
-  .navbar + .jumbotron {
-    margin-top: -20px; }
-  .jumbotron .lang-logo {
-    display: block;
-    background: #B01302;
-    border-radius: 50%;
-    overflow: hidden;
-    width: 100px;
-    height: 100px;
-    margin: auto;
-    border: 2px solid white; }
-    .jumbotron .lang-logo img {
-      max-width: 100%; }
-
-
-
+  font-family: "Archivo", sans-serif;
+  font-weight: 400;
+  transition: background-color, box-shadow .1s;
+}
+button:hover{
+  background-color: #4f1f9c;
+  box-shadow: 0 0 10px #845ac7;
+}
+.jumbotron {
+  background: #532f8c;
+  color: white;
+  padding-bottom: 10px;
+}
+.jumbotron .btn-primary {
+  background: #845ac7;
+  border-color: #845ac7;
+}
+.jumbotron .btn-primary:hover {
+  background: #7646c1;
+}
+.jumbotron p {
+  color: #d9ccee;
+  max-width: 75%;
+  margin: 1em auto 2em;
+}
+.navbar + .jumbotron {
+  margin-top: -20px;
+}
+.jumbotron .lang-logo {
+  display: block;
+  background: #b01302;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  border: 2px solid white;
+}
+.jumbotron .lang-logo img {
+  max-width: 100%;
+}
