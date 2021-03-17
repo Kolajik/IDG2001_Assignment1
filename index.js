@@ -2,11 +2,13 @@ const { performance, PerformanceObserver } = require("perf_hooks")
 const express = require('express')
 const fs = require('fs')
 const path = require('path')
+var favicon = require('serve-favicon')
 const sha256 = require('js-sha256')
 const MongoClient = require('mongodb').MongoClient
 const PORT = process.env.PORT || 5001
 mainApp = express()
 
+// performance hook obeserver of measurements
 let latency;
 const perfObserver = new PerformanceObserver((items) => {
   items.getEntries().forEach((entry) => {
@@ -37,6 +39,7 @@ runDB().catch(console.error);
 // Main back-end of application
 mainApp
   .use(express.static(path.join(__dirname, 'public')))
+  .use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
