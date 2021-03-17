@@ -59,7 +59,7 @@
 
       <div class="row" style="word-wrap:break-word">
         <form>
-          <h4>If you'd like to see all personal numbers, call <i>/allPersonNums</i> interface (don't use in production pls).</h4>
+          <h4>If you'd like to see all personal numbers, call <i>/assignment1/allPersonNums</i> interface (don't use in production pls).</h4>
         </form>
       </div>
 
@@ -78,7 +78,7 @@
     if (document.getElementById('fname').value == "" || document.getElementById('lname').value == "" || document.getElementById('dateOfBirth').value == "" || document.getElementById('city').value == "")
       alert("Please fill in all required fields.")
     else {
-      request.open("POST", `createUserAccount/${fname}/${lname}/${dateOfBirth}/${city}`, true)
+      request.open("POST", `assignment1/createUserAccount/${fname}/${lname}/${dateOfBirth}/${city}`, true)
       request.setRequestHeader("Content-Type", "text/plain")
       // console.log(request)
       request.onload = function () {
@@ -104,7 +104,7 @@
     if (document.getElementById('fname').value == "" || document.getElementById('lname').value == "" || document.getElementById('dateOfBirth').value == "" || document.getElementById('city').value == "")
       alert("Please fill in all required fields.")
     else {
-      request.open("GET", `getAccount/${fname}/${lname}/${dateOfBirth}/${city}`, true)
+      request.open("GET", `assignment1/getAccount/${fname}/${lname}/${dateOfBirth}/${city}`, true)
       request.setRequestHeader("Content-Type", "text/plain")
       // console.log(request)
       request.onload = function () {
@@ -127,7 +127,7 @@
     if (document.getElementById('person_num').value == "")
       alert("Please fill in required field.")
     else {
-      request.open("DELETE", `/deleteAccountById/${person_num}`, true)
+      request.open("DELETE", `assignment1/deleteAccountById/${person_num}`, true)
       // console.log(request)
       request.onload = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -149,7 +149,7 @@
     if (document.getElementById('person_num_update').value == "" || document.getElementById('lname_update').value == "")
       alert("Please fill in all required fields.")
     else {
-      request.open("PUT", `updateAccount/${person_num_update}/${lname_update}`, true)
+      request.open("PUT", `assignment1/updateAccount/${person_num_update}/${lname_update}`, true)
       request.setRequestHeader("Content-Type", "text/plain")
       // console.log(request)
       request.onload = function () {

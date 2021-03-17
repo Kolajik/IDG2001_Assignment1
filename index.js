@@ -33,31 +33,31 @@ mainApp
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/assignment1', (req, res) => res.render('pages/assignment01'))
-  .post('/createUserAccount/:fname/:lname/:dateOfBirth/:city', async (req, res) => {
+  .post('/assignment1/createUserAccount/:fname/:lname/:dateOfBirth/:city', async (req, res) => {
     const response = await createListings(mongodbClient, req.params.fname, req.params.lname, req.params.dateOfBirth, req.params.city);
     // console.log(response);
     res.setHeader('content-type', 'application/json');
     res.end(response.message);
   })
-  .get('/getAccount/:fname/:lname/:dateOfBirth/:city', async (req, res) => {
+  .get('/assignment1/getAccount/:fname/:lname/:dateOfBirth/:city', async (req, res) => {
     const response = await findListingsByName(mongodbClient, req.params.fname, req.params.lname, req.params.dateOfBirth, req.params.city);
     // console.log(response);
     res.setHeader('content-type', 'application/json');
     res.end(response.message);
   })
-  .delete('/deleteAccountById/:person_num', async (req,res) => {
+  .delete('/assignment1/deleteAccountById/:person_num', async (req,res) => {
     const response = await deleteListings(mongodbClient, req.params.person_num);
     // console.log(response);
     res.setHeader('content-type', 'application/json');
     res.end(response.message);
   })
-  .get('/allPersonNums', async (req, res) => {
+  .get('/assignment1/allPersonNums', async (req, res) => {
     const response = await seeAllPersonNums(mongodbClient);
     // console.log(response);
     res.setHeader('content-type', 'application/json');
     res.send(response);
   })
-  .put('/updateAccount/:person_num/:lname', async (req, res) => {
+  .put('/assignment1/updateAccount/:person_num/:lname', async (req, res) => {
     const response = await updateClientsLastName(mongodbClient, req.params.person_num, req.params.lname);
     // console.log(response);
     res.setHeader('content-type', 'application/json');
