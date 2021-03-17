@@ -1,5 +1,4 @@
-const cool = require('cool-ascii-faces')
-// const { performance } = require('perf_hooks')
+const { performance, PerformanceObserver } = require("perf_hooks")
 const express = require('express')
 const fs = require('fs')
 const path = require('path')
@@ -7,6 +6,15 @@ const sha256 = require('js-sha256')
 const MongoClient = require('mongodb').MongoClient
 const PORT = process.env.PORT || 5001
 mainApp = express()
+
+let latency;
+const perfObserver = new PerformanceObserver((items) => {
+  items.getEntries().forEach((entry) => {
+    latency = entry.duration
+    console.log(entry)
+  })
+})
+perfObserver.observe({ entryTypes: ["measure"], buffer: true })
 
 // Database definition and connection
 const DATABASE = "Assignment1DB"
@@ -45,7 +53,7 @@ mainApp
     res.setHeader('content-type', 'application/json');
     res.end(response.message);
   })
-  .delete('/assignment1/deleteAccountById/:person_num', async (req,res) => {
+  .delete('/assignment1/deleteAccountById/:person_num', async (req, res) => {
     const response = await deleteListings(mongodbClient, req.params.person_num);
     // console.log(response);
     res.setHeader('content-type', 'application/json');
@@ -88,9 +96,9 @@ async function listDatabases(client) {
 }
 
 async function createListings(client, firstName, lastName, dateOfBirth, city) {
-  // performance.mark('A');
+  performance.mark('createListing_3');
   const account_number = Math.floor(1000000 + Math.random() * 9999999);
-  const person_num = sha256(firstName.toLowerCase()+lastName.toLowerCase()+dateOfBirth+city.toLowerCase());
+  const person_num = sha256(firstName.toLowerCase() + lastName.toLowerCase() + dateOfBirth + city.toLowerCase());
   const dateOfBirthUnix = new Date(Date.parse(dateOfBirth))
   newListings = {
     "personal_number": person_num,
@@ -102,12 +110,7 @@ async function createListings(client, firstName, lastName, dateOfBirth, city) {
     "creation_date": Date.now()
   }
   const finding = await client.db(DATABASE).collection(COLLECTION)
-    .findOne({ personal_number: person_num})
-    // Please try not to use then() here, because it will "use" finding object and it will be undefined on line 98 -> thus you can create infinite amount of same users
-    // .then(() => {
-       // performance.mark('B')
-       // performance.measure('A to B', 'A', 'B');
-    // })
+    .findOne({ personal_number: person_num })
     .catch(console.error);
 
   if (finding) {
@@ -115,11 +118,8 @@ async function createListings(client, firstName, lastName, dateOfBirth, city) {
     return { "message": `Client ${firstName} ${lastName} already has an account - ${finding.account_number}.` };
   }
   else {
-    // performance.mark('C')
-    // performance.measure('B to C', 'B', 'C');
-    // const measureAB = performance.getEntriesByName('A to B')[0];
-    // const measureBC = performance.getEntriesByName('B to C')[0];
-    // console.log(`AB latency: ${measureAB.duration} BC latency: ${measureBC.duration}`)
+    performance.mark('createListing_4');
+    performance.measure("createListing 3-4", "createListing_3", "createListing_4")
 
     const result = client.db(DATABASE).collection(COLLECTION)
       .insertOne(newListings)
@@ -127,12 +127,13 @@ async function createListings(client, firstName, lastName, dateOfBirth, city) {
         console.log(`A new record with id ${result.insertedId} was inserted to DB ${DATABASE} and table ${COLLECTION}.`);
       })
       .catch(console.error);
-    return { "message": `An account with number ${account_number} for ${firstName} ${lastName} client was created. Person id ${person_num}.` };
+    return { "message": `An account with number ${account_number} for ${firstName} ${lastName} client was created. <br> Person id: ${person_num} <br>Latency: ${latency}` };
   }
 }
 
 async function findListingsByName(client, firstName, lastName, dateOfBirth, city) {
-  const person_num = sha256(firstName.toLowerCase()+lastName.toLowerCase()+dateOfBirth+city.toLowerCase());
+  performance.mark('findListing_3');
+  const person_num = sha256(firstName.toLowerCase() + lastName.toLowerCase() + dateOfBirth + city.toLowerCase());
   query = { personal_number: person_num };
   const result = await client
     .db(DATABASE)
@@ -142,9 +143,12 @@ async function findListingsByName(client, firstName, lastName, dateOfBirth, city
     .catch(console.error);
 
   if (result.length > 0) {
+    performance.mark('findListing_4');
+    performance.measure("findListing 3-4", "findListing_3", "findListing_4")
+
     console.log(`${result.length} record(s) exist in DB:`);
     console.log(result);
-    return { "message": `Client's account number you looked for is: ${result[0].account_number}. <br>Personal number is ${result[0].personal_number}.` }
+    return { "message": `Client's account number you looked for is: ${result[0].account_number}. <br> Personal number is ${result[0].personal_number}. <br>Latency: ${latency}` }
   }
   else {
     console.log("No record found in DB.");
@@ -153,6 +157,7 @@ async function findListingsByName(client, firstName, lastName, dateOfBirth, city
 }
 
 async function deleteListings(client, person_num) {
+  performance.mark('deleteListing_3');
   query = { personal_number: person_num }
   const result = await client
     .db(DATABASE)
@@ -161,8 +166,11 @@ async function deleteListings(client, person_num) {
     .catch(console.error);
 
   if (result.deletedCount > 0) {
+    performance.mark('deleteListing_4');
+    performance.measure("deleteListing 3-4", "deleteListing_3", "deleteListing_4")
+
     console.log(`${result.deletedCount} client(s) with personal number ${person_num} was/were deleted.`);
-    return { "message": `${result.deletedCount} client(s) with personal number ${person_num} was/were deleted.` }
+    return { "message": `${result.deletedCount} client(s) with personal number ${person_num} was/were deleted. <br>Latency: ${latency}` }
   }
   else {
     console.log(`No client with personal number ${person_num} exists in DB.`);
@@ -171,28 +179,32 @@ async function deleteListings(client, person_num) {
 }
 
 async function updateClientsLastName(client, person_num, lastName) {
-  const query = {personal_number: person_num}
-  const update = {last_name: lastName}
+  performance.mark('updateName_3');
+  const query = { personal_number: person_num }
+  const update = { last_name: lastName }
   const result = await client
     .db(DATABASE)
     .collection(COLLECTION)
-    .updateOne(query, {$set: update})
+    .updateOne(query, { $set: update })
     .catch(console.error);
 
-    if (result.matchedCount > 0) {
-      if (result.modifiedCount > 0) {
-          console.log(`We have found ${result.matchedCount} records with such parameter. ${result.modifiedCount} - number of modified records.`);
-          return {"message": `${person_num} was updated to ${lastName}.`};
-      }
-      else {
-        console.log(`${result.modifiedCount} updated records. ${result.matchedCount} found objects in DB with such criteria.`);
-        return {"message": `${result.modifiedCount} updated records. ${result.matchedCount} found objects in DB with such criteria.`};
-      }
+  if (result.matchedCount > 0) {
+    if (result.modifiedCount > 0) {
+      performance.mark('updateName_4');
+      performance.measure("updateName 3-4", "updateName_3", "updateName_4")
+
+      console.log(`We have found ${result.matchedCount} records with such parameter. ${result.modifiedCount} - number of modified records.`);
+      return { "message": `${person_num} was updated to ${lastName}. <br>Latency: ${latency}` };
     }
     else {
       console.log(`${result.modifiedCount} updated records. ${result.matchedCount} found objects in DB with such criteria.`);
-      return {"message": `${result.modifiedCount} updated records. ${result.matchedCount} found objects in DB with such criteria.`};
+      return { "message": `${result.modifiedCount} updated records. ${result.matchedCount} found objects in DB with such criteria.` };
     }
+  }
+  else {
+    console.log(`${result.modifiedCount} updated records. ${result.matchedCount} found objects in DB with such criteria.`);
+    return { "message": `${result.modifiedCount} updated records. ${result.matchedCount} found objects in DB with such criteria.` };
+  }
 }
 
 async function seeAllPersonNums(client) {

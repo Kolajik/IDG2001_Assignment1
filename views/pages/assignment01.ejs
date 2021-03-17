@@ -9,64 +9,99 @@
 
 <body>
   <div class="jumbotron text-center">
-    <h1>Assignment 1</h1>
+    <h1>Assignment 1 - ABC Bank</h1>
     <p>Kolaja David, Emil Bøen, Gabriel Marques</p>
   </div>
-
+  <svg id="definition" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="required" viewbox="0 0 128 128">
+        <g>
+          <path
+            d="M110.1,16.4L75.8,56.8l0.3,1l50.6-10.2v32.2l-50.9-8.9l-0.3,1l34.7,39.1l-28.3,16.5L63.7,78.2L63,78.5   l-18.5,49L17.2,111l34.1-39.8v-0.6l-50,9.2V47.6l49.3,9.9l0.3-0.6L17.2,16.7L45.5,0.5l17.8,48.7H64L82.1,0.5L110.1,16.4z">
+          </path>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
   <main>
     <div class="_container">
-
-      <div class="row">
-        <form>
+      <div class="box a">
+        <form class="form">
           <h3>Add/search for a user account</h3>
-          <label>First name:</label>
-          <input type="text" id="fname" required><br>
-          <label>Last name:</label>
-          <input type="text" id="lname" required><br>
-          <label>Date of birth:</label>
-          <input type="date" placeholder="1970-01-01" id="dateOfBirth" required><br>
-          <label>City: </label>
-          <input type="text" id="city" required><br>
+          <label for="fname">First name<svg class="icon" focusable="false">
+              <use xlink:href="#required"></use>
+            </svg></label>
+          <input type="text" name="fname" id="fname" required>
+          <label for="lname">Last name<svg class="icon" focusable="false">
+              <use xlink:href="#required"></use>
+            </svg></label>
+          <input type="text" name="lname" id="lname" required>
+          <label for="dob">Date of birth<svg class="icon" focusable="false">
+              <use xlink:href="#required"></use>
+            </svg></label>
+          <input type="date" name="dob" placeholder="1970-01-01" id="dateOfBirth" required>
+          <label for="city">City<svg class="icon" focusable="false">
+              <use xlink:href="#required"></use>
+            </svg></label>
+          <input type="text" name="city" id="city" required>
           <button type="button" onClick="createUserAccount()">Create an account</button>
-          <p id="accountCreateResponse"><b>Please mind your inputs.</b></p>
-          <br>
+          <p id="accountCreateResponse">
+            <b>
+              <svg class="icon" focusable="false">
+                <use xlink:href="#required"></use>
+              </svg> Required field
+            </b>
+          </p>
           <button type="button" onClick="displayAccountNumber()">Show me account number</button>
           <p id="searchAccountResponse"><b>Client's account number you looked for is: </b></p>
         </form>
       </div>
-
-      <div class="row">
-        <form>
+      <div class="box b">
+        <form class="form">
           <h3>Delete customer from DB</h3>
-          <label>Personal number: </label>
-          <input type="text" name="Personal number" id="person_num" required><br>
+          <label for="person_num">Personal number<svg class="icon" focusable="false">
+              <use xlink:href="#required"></use>
+            </svg></label>
+          <input type="text" name="person_num" id="person_num" required>
           <button type="button" onClick="deleteClientFromDB()">Delete client's account</button>
-          <p id="deleteAccountResponse"></p>
+          <p id="deleteAccountResponse"><b>
+              <svg class="icon" focusable="false">
+                <use xlink:href="#required"></use>
+              </svg> Required field
+            </b>
+          </p>
         </form>
       </div>
-
-      <div class="row">
-        <form>
+      <div class="box c">
+        <form class="form">
           <h3>Update customer in DB</h3>
-          <label>Personal number: </label>
-          <input type="text" name="Personal number" id="person_num_update" required><br>
-          <label>Updated last name: </label>
-          <input type="text" name="Last Name to update" id="lname_update" required>
+          <label for="Personal_number">Personal number<svg class="icon" focusable="false">
+              <use xlink:href="#required"></use>
+            </svg></label>
+          <input type="text" name="Personal_number" id="person_num_update" required>
+          <label for="lname_update">Updated last name<svg class="icon" focusable="false">
+              <use xlink:href="#required"></use>
+            </svg></label>
+          <input type="text" name="lname_update" id="lname_update" required>
           <button type="button" onClick="updateClientsLastName()">Update client's name</button>
-          <p id="updateAccountResponse"></p>
+          <p id="updateAccountResponse"><b>
+              <svg class="icon" focusable="false">
+                <use xlink:href="#required"></use>
+              </svg>
+              Required field
+            </b>
+          </p>
         </form>
       </div>
-
-      <div class="row" style="word-wrap:break-word">
-        <form>
-          <h4>If you'd like to see all personal numbers, call <i>/assignment1/allPersonNums</i> interface (don't use in production pls).</h4>
-        </form>
+      <div class="box d" style="word-wrap:break-word">
+        <div class="form">
+          <h4>If you'd like to see all personal numbers, call <i>/assignment1/allPersonNums</i> interface
+            (don't use in production pls).</h4>
+        </div>
       </div>
-
     </div>
   </main> <!-- container -->
 </body>
-
 <script>
   // AJAX Create a user account
   function createUserAccount() {

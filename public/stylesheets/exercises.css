@@ -1,36 +1,45 @@
-@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@500;400&family=Cairo:wght@200;600;900&display=swap");
-
 body {
-  background: rgb(66, 66, 66);
+  background-color: white;
+  height: 100vh;
 }
 main {
   width: 100%;
+  margin-top: -10em;
   font-family: "Cairo", sans-serif;
 }
+.box{
+  flex: 1 1 100px;
+  max-width: 80%;
+  min-width: 300px;
+  margin: 1em;
+  overflow-wrap: break-word;
+}
 ._container {
+  margin: auto;
+  width: 90%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 0 2em;
+  padding-bottom: 4em;
 }
-.row {
-  flex: 1 1 450px;
-}
-.row :is(h3, p) {
+.box :is(h3, p) {
   text-align: center;
   font-family: "Cairo", sans-serif;
   font-weight: 900;
+  height: 100%;
   margin: 1em;
 }
-form {
-  margin: 1em 4em 4em 4em;
+.form {
+  /* margin: 1em 4em 4em 4em; */
   padding: 2em;
-  background-color: white;
+  background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
   display: flex;
   flex-direction: column;
   border-radius: 1em;
+  color: white;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.582), 0 0 5px white;
 }
-form :is(input, button) {
+.form :is(input, button) {
   width: 70%;
   height: 3.5em;
   margin: auto;
@@ -38,37 +47,42 @@ form :is(input, button) {
   border-radius: 0.2em;
   padding: 3%;
 }
-form label {
+.form label {
   padding-left: 15%;
 }
-input {
-  background-color: #cdbedb;
+.form input {
+  background-color: #ffffffa4;
+  color: black;
+  margin-bottom: 1em;
 }
 button {
-  background-color: #7a3cdd;
+  background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-color: #667eea;
   color: white;
   font-family: "Archivo", sans-serif;
   font-weight: 400;
-  transition: background-color, box-shadow .1s;
+  transition: box-shadow 0.1s;
 }
-button:hover{
-  background-color: #4f1f9c;
-  box-shadow: 0 0 10px #845ac7;
+button:hover {
+  box-shadow: 0 0 10px #00000067;
+}
+.icon {
+  width: 0.35em;
+  height: 0.35em;
+  fill: red;
+  vertical-align: top;
 }
 .jumbotron {
-  background: #532f8c;
+  background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
   color: white;
   padding-bottom: 10px;
 }
-.jumbotron .btn-primary {
-  background: #845ac7;
-  border-color: #845ac7;
-}
-.jumbotron .btn-primary:hover {
-  background: #7646c1;
+.jumbotron h1 {
+  font-size: 3.5em;
+  margin-top: 0;
 }
 .jumbotron p {
-  color: #d9ccee;
+  color: #48494b;
   max-width: 75%;
   margin: 1em auto 2em;
 }
