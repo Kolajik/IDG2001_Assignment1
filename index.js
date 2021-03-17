@@ -89,7 +89,7 @@ async function listDatabases(client) {
 
 async function createListings(client, firstName, lastName, dateOfBirth, city) {
   // performance.mark('A');
-  const account_number = Math.floor(1000000 + Math.random() * 9000000);
+  const account_number = Math.floor(1000000 + Math.random() * 9999999);
   const person_num = sha256(firstName+lastName+dateOfBirth+city);
   const dateOfBirthUnix = new Date(Date.parse(dateOfBirth))
   newListings = {
