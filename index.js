@@ -90,7 +90,7 @@ async function listDatabases(client) {
 async function createListings(client, firstName, lastName, dateOfBirth, city) {
   // performance.mark('A');
   const account_number = Math.floor(1000000 + Math.random() * 9999999);
-  const person_num = sha256(firstName+lastName+dateOfBirth+city);
+  const person_num = sha256(firstName.toLowerCase()+lastName.toLowerCase()+dateOfBirth+city.toLowerCase());
   const dateOfBirthUnix = new Date(Date.parse(dateOfBirth))
   newListings = {
     "personal_number": person_num,
@@ -132,7 +132,7 @@ async function createListings(client, firstName, lastName, dateOfBirth, city) {
 }
 
 async function findListingsByName(client, firstName, lastName, dateOfBirth, city) {
-  const person_num = sha256(firstName+lastName+dateOfBirth+city);
+  const person_num = sha256(firstName.toLowerCase()+lastName.toLowerCase()+dateOfBirth+city.toLowerCase());
   query = { personal_number: person_num };
   const result = await client
     .db(DATABASE)

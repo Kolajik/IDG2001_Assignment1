@@ -77,6 +77,9 @@
     var request = new XMLHttpRequest()
     if (document.getElementById('fname').value == "" || document.getElementById('lname').value == "" || document.getElementById('dateOfBirth').value == "" || document.getElementById('city').value == "")
       alert("Please fill in all required fields.")
+    else if (!document.getElementById('fname').value.match(/^[0-9a-zA-Z]+$/) || !document.getElementById('lname').value.match(/^[0-9a-zA-Z]+$/) || !document.getElementById('city').value.match(/^[0-9a-zA-Z]+$/)) {
+      alert("Please fill in only alphanumeric characters into fields.")
+    }
     else {
       request.open("POST", `assignment1/createUserAccount/${fname}/${lname}/${dateOfBirth}/${city}`, true)
       request.setRequestHeader("Content-Type", "text/plain")
@@ -103,6 +106,9 @@
     var request = new XMLHttpRequest()
     if (document.getElementById('fname').value == "" || document.getElementById('lname').value == "" || document.getElementById('dateOfBirth').value == "" || document.getElementById('city').value == "")
       alert("Please fill in all required fields.")
+    else if (!document.getElementById('fname').value.match(/^[0-9a-zA-Z]+$/) || !document.getElementById('lname').value.match(/^[0-9a-zA-Z]+$/) || !document.getElementById('city').value.match(/^[0-9a-zA-Z]+$/)) {
+      alert("Please fill in only alphanumeric characters into fields.")
+    }
     else {
       request.open("GET", `assignment1/getAccount/${fname}/${lname}/${dateOfBirth}/${city}`, true)
       request.setRequestHeader("Content-Type", "text/plain")
@@ -126,6 +132,9 @@
     var request = new XMLHttpRequest()
     if (document.getElementById('person_num').value == "")
       alert("Please fill in required field.")
+    else if (!document.getElementById('person_num').value.match(/^[0-9a-zA-Z]+$/)) {
+      alert("Please fill in only alphanumeric characters into fields.")
+    }
     else {
       request.open("DELETE", `assignment1/deleteAccountById/${person_num}`, true)
       // console.log(request)
@@ -148,6 +157,9 @@
     var request = new XMLHttpRequest()
     if (document.getElementById('person_num_update').value == "" || document.getElementById('lname_update').value == "")
       alert("Please fill in all required fields.")
+    else if (!document.getElementById('person_num_update').value.match(/^[0-9a-zA-Z]+$/) || !document.getElementById('lname_update').value.match(/^[0-9a-zA-Z]+$/)) {
+      alert("Please fill in only alphanumeric characters into fields.")
+    }
     else {
       request.open("PUT", `assignment1/updateAccount/${person_num_update}/${lname_update}`, true)
       request.setRequestHeader("Content-Type", "text/plain")
