@@ -26,16 +26,16 @@
   <main>
     <div class="_container">
       <div class="box a">
-        <form class="form">
+        <form class="form" onsubmit="createUserAccount()">
           <h3>Add/search for a user account</h3>
-          <label for="fname">First name<svg class="icon" focusable="false">
+          <label for="fname" >First name<svg class="icon" focusable="false">
               <use xlink:href="#required"></use>
             </svg></label>
-          <input type="text" name="fname" id="fname" required>
+          <input type="text" name="fname" id="fname" required maxlength="50">
           <label for="lname">Last name<svg class="icon" focusable="false">
               <use xlink:href="#required"></use>
             </svg></label>
-          <input type="text" name="lname" id="lname" required>
+          <input type="text" name="lname" id="lname" required maxlength="50">
           <label for="dob">Date of birth<svg class="icon" focusable="false">
               <use xlink:href="#required"></use>
             </svg></label>
@@ -43,8 +43,9 @@
           <label for="city">City<svg class="icon" focusable="false">
               <use xlink:href="#required"></use>
             </svg></label>
-          <input type="text" name="city" id="city" required>
-          <button type="button" onClick="createUserAccount()">Create an account</button>
+          <input type="text" name="city" id="city" required maxlength="50">
+          <button type="submit">Create an account</button>
+
           <p id="accountCreateResponse">
             <b>
               <svg class="icon" focusable="false">
@@ -57,13 +58,13 @@
         </form>
       </div>
       <div class="box b">
-        <form class="form">
+        <form class="form" onsubmit="deleteClientFromDB()">
           <h3>Delete customer from DB</h3>
           <label for="person_num">Personal number<svg class="icon" focusable="false">
               <use xlink:href="#required"></use>
             </svg></label>
           <input type="text" name="person_num" id="person_num" required>
-          <button type="button" onClick="deleteClientFromDB()">Delete client's account</button>
+          <button type="submit">Delete client's account</button>
           <p id="deleteAccountResponse"><b>
               <svg class="icon" focusable="false">
                 <use xlink:href="#required"></use>
@@ -73,7 +74,7 @@
         </form>
       </div>
       <div class="box c">
-        <form class="form">
+        <form class="form" onsubmit="updateClientsLastName()">
           <h3>Update customer in DB</h3>
           <label for="Personal_number">Personal number<svg class="icon" focusable="false">
               <use xlink:href="#required"></use>
@@ -82,8 +83,8 @@
           <label for="lname_update">Updated last name<svg class="icon" focusable="false">
               <use xlink:href="#required"></use>
             </svg></label>
-          <input type="text" name="lname_update" id="lname_update" required>
-          <button type="button" onClick="updateClientsLastName()">Update client's name</button>
+          <input type="text" name="lname_update" id="lname_update" required maxlength="50">
+          <button type="submit">Update client's name</button>
           <p id="updateAccountResponse"><b>
               <svg class="icon" focusable="false">
                 <use xlink:href="#required"></use>
@@ -93,16 +94,19 @@
           </p>
         </form>
       </div>
-      <div class="box d" style="word-wrap:break-word">
+      <!-- <div class="box d" style="word-wrap:break-word">
         <div class="form">
           <h4>If you'd like to see all personal numbers, call <i>/assignment1/allPersonNums</i> interface
             (don't use in production pls).</h4>
         </div>
-      </div>
+      </div> -->
     </div>
   </main> <!-- container -->
 </body>
 <script>
+  const forms = document.querySelectorAll('form');
+  forms.forEach(element => element.addEventListener('submit', event => event.preventDefault()));
+  
   // AJAX Create a user account
   function createUserAccount() {
     const fname = document.getElementById("fname").value

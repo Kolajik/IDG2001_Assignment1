@@ -118,7 +118,7 @@ async function createListings(client, firstName, lastName, dateOfBirth, city) {
 
   if (finding) {
     console.log(`User already exists.`);
-    return { "message": `Client ${firstName} ${lastName} already has an account - ${finding.account_number}.` };
+    return { "message": `<div class="response"> Client ${firstName} ${lastName} already has an account - ${finding.account_number}</div>` };
   }
   else {
     performance.mark('createListing_4');
@@ -130,7 +130,7 @@ async function createListings(client, firstName, lastName, dateOfBirth, city) {
         console.log(`A new record with id ${result.insertedId} was inserted to DB ${DATABASE} and table ${COLLECTION}.`);
       })
       .catch(console.error);
-    return { "message": `An account with number ${account_number} for ${firstName} ${lastName} client was created. <br> Person id: ${person_num} <br>Latency: ${latency}` };
+    return { "message": `<div class="response"> An account for ${firstName} ${lastName} was created. <br>Account number: ${account_number} <br>Personal number: ${person_num} <div class="latency"> Latency for this request: ${latency} </div></div>` };
   }
 }
 
@@ -151,11 +151,11 @@ async function findListingsByName(client, firstName, lastName, dateOfBirth, city
 
     console.log(`${result.length} record(s) exist in DB:`);
     console.log(result);
-    return { "message": `Client's account number you looked for is: ${result[0].account_number}. <br> Personal number is ${result[0].personal_number}. <br>Latency: ${latency}` }
+    return { "message": `<div class="response"> Client with matching details found in DB! <br> Account number: ${result[0].account_number} <br> Personal number: ${result[0].personal_number} <div class="latency"> Latency for this request: ${latency} </div></div>` }
   }
   else {
     console.log("No record found in DB.");
-    return { "message": `No account exists for ${firstName}/${lastName}/${dateOfBirth}/${city} combination.` }
+    return { "message": `<div class="response"> No account exists for ${firstName}/${lastName}/${dateOfBirth}/${city} combination.</div>` }
   }
 }
 
@@ -173,11 +173,11 @@ async function deleteListings(client, person_num) {
     performance.measure("deleteListing 3-4", "deleteListing_3", "deleteListing_4")
 
     console.log(`${result.deletedCount} client(s) with personal number ${person_num} was/were deleted.`);
-    return { "message": `${result.deletedCount} client(s) with personal number ${person_num} was/were deleted. <br>Latency: ${latency}` }
+    return { "message": `<div class="response"> ${result.deletedCount} Deleted client(s) with personal number: <br> ${person_num}<div class="latency"> Latency for this request: ${latency} </div></div>` }
   }
   else {
     console.log(`No client with personal number ${person_num} exists in DB.`);
-    return { "message": `No client with personal number ${person_num} exists in DB.` }
+    return { "message": `<div class="response"> Could not find client in DB with with personal number: <br> ${person_num}</div>` }
   }
 }
 
@@ -197,16 +197,16 @@ async function updateClientsLastName(client, person_num, lastName) {
       performance.measure("updateName 3-4", "updateName_3", "updateName_4")
 
       console.log(`We have found ${result.matchedCount} records with such parameter. ${result.modifiedCount} - number of modified records.`);
-      return { "message": `${person_num} was updated to ${lastName}. <br>Latency: ${latency}` };
+      return { "message": `<div class="response"> Last name of client with Personal number: ${person_num} <br>was updated to "${lastName}". <div class="latency"> Latency for this request: ${latency}</div></div>` };
     }
     else {
       console.log(`${result.modifiedCount} updated records. ${result.matchedCount} found objects in DB with such criteria.`);
-      return { "message": `${result.modifiedCount} updated records. ${result.matchedCount} found objects in DB with such criteria.` };
+      return { "message": `<div class="response">${result.modifiedCount} updated records. ${result.matchedCount} found objects in DB with such criteria.</div>` };
     }
   }
   else {
     console.log(`${result.modifiedCount} updated records. ${result.matchedCount} found objects in DB with such criteria.`);
-    return { "message": `${result.modifiedCount} updated records. ${result.matchedCount} found objects in DB with such criteria.` };
+    return { "message": `<div class="response"> ${result.modifiedCount} updated records. ${result.matchedCount} found objects in DB with such criteria.</div>` };
   }
 }
 
