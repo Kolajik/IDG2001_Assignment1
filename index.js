@@ -21,7 +21,7 @@ perfObserver.observe({ entryTypes: ["measure"], buffer: true })
 // Database definition and connection
 const DATABASE = "Assignment1DB"
 const COLLECTION = "Collection1"
-const uri = "mongodb+srv://daviko:IholEApp5eOp*a@assignment1cluster0.ipbog.mongodb.net/Assignment1DB?retryWrites=true&w=majority";
+const uri = "mongodb+srv://127.0.0.1:5301/Assignment1DB?retryWrites=true&w=majority";
 const mongodbClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 async function runDB() {
   try {
